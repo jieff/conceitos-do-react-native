@@ -9,15 +9,34 @@ export function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   function handleAddTask(newTaskTitle: string) {
+    const newTask = {
+      id: new Date().getTime(),
+      title: newTaskTitle,
+      done: false
+    }
+
+    setTasks(oldTasks => [...oldTasks, newTask]);
+
     //TODO - add new task
   }
 
   function handleToggleTaskDone(id: number) {
+    const updatedTasks = tasks.map(tasks => ({...tasks}));
+
+    const foundItem = updatedTasks.find(item => item.id === id);
+    if (!foundItem)
+      return;
+
+    foundItem.done = !foundItem.done;
+    setTasks(updatedTasks);
     //TODO - toggle task done if exists
   }
 
   function handleRemoveTask(id: number) {
     //TODO - remove task from state
+    const updatedTasks = tasks.filter(task => task.id !== id);
+
+    setTasks(updatedTasks);
   }
 
   return (
